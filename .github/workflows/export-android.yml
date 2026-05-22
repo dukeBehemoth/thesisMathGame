@@ -17,15 +17,9 @@ jobs:
       - name: Setup
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/
+          mkdir -v -p ~/.config/
+          cp -r /root/.config/godot ~/.config/godot
           mv /root/.local/share/godot/export_templates/4.6.3.stable ~/.local/share/godot/export_templates/4.6.3.stable
-
-      - name: Create debug keystore
-        run: |
-          keytool -keyalg RSA -genkeypair -alias android \
-            -keypass android -keystore debug.keystore \
-            -storepass android -dname "CN=,OU=,O=,L=,S=,C=" \
-            -validity 9999
-          cp debug.keystore /root/debug.keystore
 
       - name: Export APK
         run: |
