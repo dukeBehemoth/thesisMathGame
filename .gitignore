@@ -1,0 +1,12 @@
+# Python scripts (external tools)
+*.py
+__pycache__/
+*.pyc
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Godot
+.godot/import/
+*.import

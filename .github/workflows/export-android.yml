@@ -1,0 +1,39 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+env:
+  GODOT_VERSION: 4.6
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Godot
+        uses: abarichello/godot-ci@v4
+        with:
+          version: ${{ env.GODOT_VERSION }}
+
+      - name: Create debug keystore
+        run: |
+          keytool -keyalg RSA -genkeypair -alias android \
+            -keypass android -keystore debug.keystorerc \
+            -storepass android -dname "CN=,OU=,O=,L=,S=,C=" \
+            -validity 9999
+
+      - name: Export APK
+        run: |
+          mkdir -p build
+          godot4 --headless --export-debug "Android" build/math-quiz.apk
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: math-quiz-android
+          path: build/math-quiz.apk

@@ -1,0 +1,39 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Math Quiz"
+config/description="A fun math quiz game to test your skills for the Unified State Exam!"
+run/main_scene="res://Scenes/main_menu.tscn"
+config/features=PackedStringArray("4.6")
+
+[autoload]
+
+GameManager="*res://Scripts/Managers/GameManager.gd"
+StatsManager="*res://Scripts/Managers/StatsManager.gd"
+AchievementsManager="*res://Scripts/Managers/AchievementsManager.gd"
+SettingsManager="*res://Scripts/Managers/SettingsManager.gd"
+ThemeManager="*res://Scripts/Managers/ThemeManager.gd"
+QuestionDownloader="*res://Scripts/Quiz/QuestionDownloader.gd"
+
+[display]
+
+window/size/min_width=480
+window/size/min_height=360
+
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
+
+[rendering]
+
+renderer/rendering_method="mobile"
+textures/vram_compression/import_etc2_astc=true

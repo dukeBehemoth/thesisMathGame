@@ -1,0 +1,110 @@
+[gd_scene load_steps=2 format=3 uid="uid://settings"]
+
+[ext_resource type="Script" path="res://Scripts/UI/settings.gd" id="1"]
+
+[node name="Settings" type="Control"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1")
+
+[node name="BackgroundColor" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.1, 0.1, 0.18, 1)
+
+[node name="VBox" type="VBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="TitleLabel" type="Label" parent="VBox"]
+unique_name_in_owner = true
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 36
+text = "Настройки"
+size_flags_horizontal = 3
+groups = ["settings_labels"]
+
+[node name="SoundLabel" type="Label" parent="VBox"]
+unique_name_in_owner = true
+theme_override_font_sizes/font_size = 16
+text = "Звук: 80%"
+size_flags_horizontal = 3
+groups = ["settings_labels"]
+
+[node name="SoundSlider" type="HSlider" parent="VBox"]
+unique_name_in_owner = true
+min = 0.0
+max = 100.0
+step = 1.0
+value = 80.0
+size_flags_horizontal = 3
+custom_minimum_size = Vector2i(0, 36)
+
+[node name="MusicLabel" type="Label" parent="VBox"]
+unique_name_in_owner = true
+theme_override_font_sizes/font_size = 16
+text = "Музыка: 60%"
+size_flags_horizontal = 3
+groups = ["settings_labels"]
+
+[node name="MusicSlider" type="HSlider" parent="VBox"]
+unique_name_in_owner = true
+min = 0.0
+max = 100.0
+step = 1.0
+value = 60.0
+size_flags_horizontal = 3
+custom_minimum_size = Vector2i(0, 36)
+
+[node name="QuestionsLabel" type="Label" parent="VBox"]
+unique_name_in_owner = true
+theme_override_font_sizes/font_size = 16
+text = "Вопросов за игру"
+size_flags_horizontal = 3
+groups = ["settings_labels"]
+
+[node name="QuestionsSpinBox" type="SpinBox" parent="VBox"]
+unique_name_in_owner = true
+min = 1
+max = 100
+step = 1
+value = 10
+size_flags_horizontal = 3
+custom_minimum_size = Vector2i(0, 40)
+
+[node name="DarkModeCheck" type="CheckButton" parent="VBox"]
+unique_name_in_owner = true
+theme_override_font_sizes/font_size = 16
+text = "Тёмная тема"
+size_flags_horizontal = 3
+custom_minimum_size = Vector2i(0, 44)
+
+[node name="Spacer" type="Control" parent="VBox"]
+custom_minimum_size = Vector2i(0, 8)
+
+[node name="ResetDataButton" type="Button" parent="VBox"]
+unique_name_in_owner = true
+theme_override_font_sizes/font_size = 14
+text = "Сбросить все данные"
+size_flags_horizontal = 3
+custom_minimum_size = Vector2i(0, 40)
+
+[node name="BackButton" type="Button" parent="VBox"]
+unique_name_in_owner = true
+theme_override_font_sizes/font_size = 20
+text = "Назад в меню"
+size_flags_horizontal = 3
+custom_minimum_size = Vector2i(0, 48)
+
+[node name="ResetConfirm" type="ConfirmationDialog" parent="."]
+unique_name_in_owner = true
+title = "Сброс всех данных"
+dialog_text = "Это сбросит все настройки, достижения, статистику и импортированные вопросы. Это действие нельзя отменить. Продолжить?"
+ok_button_text = "Сбросить"
+cancel_button_text = "Отмена"

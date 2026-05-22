@@ -1,0 +1,78 @@
+[gd_scene load_steps=2 format=3 uid="uid://themeselection"]
+
+[ext_resource type="Script" path="res://Scripts/UI/theme_selection.gd" id="1"]
+
+[node name="ThemeSelection" type="Control"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1")
+
+[node name="BackgroundColor" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.1, 0.1, 0.18, 1)
+
+[node name="VBox" type="VBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -70.0
+
+[node name="Column" type="VBoxContainer" parent="VBox"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="TitleLabel" type="Label" parent="VBox/Column"]
+unique_name_in_owner = true
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 36
+text = "Выберите разделы"
+size_flags_horizontal = 3
+custom_minimum_size = Vector2i(0, 50)
+
+[node name="SectionControls" type="HBoxContainer" parent="VBox/Column"]
+size_flags_horizontal = 3
+alignment = 1
+custom_minimum_size = Vector2i(0, 36)
+
+[node name="SelectAllButton" type="Button" parent="VBox/Column/SectionControls"]
+unique_name_in_owner = true
+theme_override_font_sizes/font_size = 14
+text = "Всё вкл"
+size_flags_horizontal = 3
+custom_minimum_size = Vector2i(0, 36)
+
+[node name="DeselectAllButton" type="Button" parent="VBox/Column/SectionControls"]
+unique_name_in_owner = true
+theme_override_font_sizes/font_size = 14
+text = "Всё выкл"
+size_flags_horizontal = 3
+custom_minimum_size = Vector2i(0, 36)
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBox/Column"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="SectionsList" type="VBoxContainer" parent="VBox/Column/ScrollContainer"]
+unique_name_in_owner = true
+theme_override_constants/separation = 8
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+
+
+[node name="BackButton" type="Button" parent="."]
+anchors_preset = 2
+anchor_right = 1.0
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -60.0
+offset_bottom = -10.0
+custom_minimum_size = Vector2i(0, 50)
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 18
+text = "Назад в меню"
+unique_name_in_owner = true
