@@ -13,13 +13,30 @@ var _answering: bool = false
 var _current_streak: int = 0
 var _correct_in_game: int = 0
 var _wrong_in_game: int = 0
+var _btn_h: float = 64
+var _btn_font_sz: float = 22
 
 func _ready():
 	_button_group = ButtonGroup.new()
 	exit_button.pressed.connect(_on_quit_pressed)
 	ThemeManager.theme_changed.connect(_apply_theme_colors)
+	resized.connect(_fit_ui)
+	call_deferred("_fit_ui")
 	_start_new_game()
 	_apply_theme_colors()
+
+func _fit_ui():
+	var h = get_viewport().get_visible_rect().size.y
+	var safe_top = max(h * 0.07, 30)
+
+	$TopBar.offset_top = safe_top
+	$TopBar.offset_bottom = safe_top + 46
+	$VBox.offset_top = safe_top + 46
+
+	_btn_h = clamp(h * 0.08, 48, 96)
+	_btn_font_sz = max(floor(_btn_h * 0.38), 16)
+	exit_button.custom_minimum_size.y = _btn_h
+	exit_button.add_theme_font_size_override("font_size", _btn_font_sz - 4)
 
 func _start_new_game():
 	GameManager.start_game()
@@ -55,8 +72,8 @@ func _show_question():
 		btn.text = q.answers[i]
 		btn.button_group = _button_group
 		btn.size_flags_horizontal = Control.SIZE_EXPAND | Control.SIZE_FILL
-		btn.custom_minimum_size = Vector2(0, 64)
-		btn.add_theme_font_size_override("font_size", 22)
+		btn.custom_minimum_size = Vector2(0, _btn_h)
+		btn.add_theme_font_size_override("font_size", _btn_font_sz)
 		btn.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		btn.pressed.connect(_on_answer_pressed.bind(i, btn))
 		_apply_button_theme(btn)
@@ -108,8 +125,8 @@ func _end_game():
 	var continue_btn = Button.new()
 	continue_btn.text = "Играть снова"
 	continue_btn.size_flags_horizontal = Control.SIZE_EXPAND | Control.SIZE_FILL
-	continue_btn.custom_minimum_size = Vector2(0, 50)
-	continue_btn.add_theme_font_size_override("font_size", 18)
+	continue_btn.custom_minimum_size = Vector2(0, _btn_h)
+	continue_btn.add_theme_font_size_override("font_size", _btn_font_sz)
 	continue_btn.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	continue_btn.pressed.connect(_start_new_game)
 	_apply_button_theme(continue_btn)
@@ -118,8 +135,8 @@ func _end_game():
 	var menu_btn = Button.new()
 	menu_btn.text = "Главное меню"
 	menu_btn.size_flags_horizontal = Control.SIZE_EXPAND | Control.SIZE_FILL
-	menu_btn.custom_minimum_size = Vector2(0, 50)
-	menu_btn.add_theme_font_size_override("font_size", 18)
+	menu_btn.custom_minimum_size = Vector2(0, _btn_h)
+	menu_btn.add_theme_font_size_override("font_size", _btn_font_sz)
 	menu_btn.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	menu_btn.pressed.connect(func(): get_tree().change_scene_to_file("res://Scenes/main_menu.tscn"))
 	_apply_button_theme(menu_btn)

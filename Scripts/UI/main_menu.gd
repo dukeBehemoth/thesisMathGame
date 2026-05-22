@@ -7,6 +7,8 @@ extends Control
 @onready var theme_button: Button = %ThemeButton
 @onready var quit_button: Button = %QuitButton
 @onready var title_label: Label = %TitleLabel
+@onready var vbox: VBoxContainer = $VBox
+@onready var notch_spacer: Control = %NotchSpacer
 
 func _ready():
 	start_button.pressed.connect(_on_start_pressed)
@@ -17,7 +19,9 @@ func _ready():
 	quit_button.pressed.connect(_on_quit_pressed)
 	ThemeManager.theme_changed.connect(_apply_theme_colors)
 	title_label.resized.connect(_fit_title_font_size)
+	resized.connect(_fit_ui)
 	call_deferred("_fit_title_font_size")
+	call_deferred("_fit_ui")
 	_apply_theme_colors()
 
 func _on_start_pressed():
@@ -40,6 +44,29 @@ func _on_quit_pressed():
 
 func _on_theme_changed():
 	_apply_theme_colors()
+
+func _fit_ui():
+	var vp_size = get_viewport().get_visible_rect().size
+	var h = vp_size.y
+
+	notch_spacer.custom_minimum_size.y = max(h * 0.07, 30)
+
+	var sep = vbox.get_theme_constant("separation")
+	var total_sep = sep * 8
+	var title_min_h = title_label.get_minimum_size().y
+	var spacer_h = $VBox/Spacer.custom_minimum_size.y
+	var available_h = h - notch_spacer.custom_minimum_size.y - title_min_h - spacer_h - total_sep
+
+	var buttons = [start_button, settings_button, stats_button, achievements_button, theme_button, quit_button]
+	var btn_count = buttons.size()
+
+	if btn_count > 0 and available_h > 0:
+		var btn_h = available_h / btn_count
+		var font_sz = max(floor(btn_h * 0.42), 14)
+
+		for btn in buttons:
+			btn.custom_minimum_size.y = btn_h
+			btn.add_theme_font_size_override("font_size", font_sz)
 
 func _fit_title_font_size():
 	var font = title_label.get_theme_default_font()

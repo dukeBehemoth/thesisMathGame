@@ -7,6 +7,7 @@ const Sections = preload("res://Scripts/Quiz/Sections.gd")
 @onready var select_all_button: Button = %SelectAllButton
 @onready var deselect_all_button: Button = %DeselectAllButton
 @onready var title_label: Label = %TitleLabel
+@onready var notch_spacer: Control = %NotchSpacer
 
 func _ready():
 	back_button.pressed.connect(_on_back_pressed)
@@ -14,6 +15,8 @@ func _ready():
 	deselect_all_button.pressed.connect(_on_deselect_all)
 	SettingsManager.settings_changed.connect(_populate_sections)
 	ThemeManager.theme_changed.connect(_apply_theme_colors)
+	resized.connect(_fit_ui)
+	call_deferred("_fit_ui")
 	_populate_sections()
 	_apply_theme_colors()
 
@@ -88,6 +91,17 @@ func _create_section_card(sec) -> Panel:
 	)
 
 	return panel
+
+func _fit_ui():
+	var h = get_viewport().get_visible_rect().size.y
+	notch_spacer.custom_minimum_size.y = max(h * 0.07, 30)
+
+	var btn_h = clamp(h * 0.07, 36, 72)
+	var font_sz = max(floor(btn_h * 0.42), 14)
+
+	for btn in [back_button, select_all_button, deselect_all_button]:
+		btn.custom_minimum_size.y = btn_h
+		btn.add_theme_font_size_override("font_size", font_sz)
 
 func _on_select_all():
 	SettingsManager.set_all_sections(true)

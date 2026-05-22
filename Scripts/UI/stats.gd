@@ -5,6 +5,8 @@ const Sections = preload("res://Scripts/Quiz/Sections.gd")
 @onready var title_label: Label = %TitleLabel
 @onready var stats_container: VBoxContainer = %StatsContainer
 @onready var back_button: Button = %BackButton
+@onready var vbox: VBoxContainer = $VBox
+@onready var notch_spacer: Control = %NotchSpacer
 
 var stat_labels: Array[Label] = []
 var section_stat_labels: Array[Label] = []
@@ -48,6 +50,8 @@ func _ready():
 	stats_container.add_child(section_panel)
 	back_button.pressed.connect(_on_back_pressed)
 	ThemeManager.theme_changed.connect(_apply_theme_colors)
+	resized.connect(_fit_ui)
+	call_deferred("_fit_ui")
 	_update_stats()
 	_apply_theme_colors()
 
@@ -99,6 +103,16 @@ func _update_stats():
 		var acc = StatsManager.get_section_accuracy(sec.id)
 		section_stat_labels[idx].text = sec.icon + " " + sec.name + ": " + str(s.correct) + "✓ / " + str(s.wrong) + "✗  (" + str(snapped(acc, 0.1)) + "%)  [" + str(total) + " ответов]"
 		idx += 1
+
+func _fit_ui():
+	var h = get_viewport().get_visible_rect().size.y
+	notch_spacer.custom_minimum_size.y = max(h * 0.07, 30)
+
+	var btn_h = clamp(h * 0.07, 36, 72)
+	var font_sz = max(floor(btn_h * 0.42), 14)
+
+	back_button.custom_minimum_size.y = btn_h
+	back_button.add_theme_font_size_override("font_size", font_sz)
 
 func _on_back_pressed():
 	get_tree().change_scene_to_file("res://Scenes/main_menu.tscn")

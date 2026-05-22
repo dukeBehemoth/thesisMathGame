@@ -13,6 +13,8 @@ const QuestionBank = preload("res://Scripts/Quiz/QuestionBank.gd")
 @onready var questions_label: Label = %QuestionsLabel
 @onready var reset_button: Button = %ResetDataButton
 @onready var reset_confirm: ConfirmationDialog = %ResetConfirm
+@onready var vbox: VBoxContainer = $VBox
+@onready var notch_spacer: Control = %NotchSpacer
 
 func _ready():
 	sound_slider.value = SettingsManager.sound_volume * 100.0
@@ -32,7 +34,20 @@ func _ready():
 	reset_confirm.confirmed.connect(_on_reset_confirmed)
 	reset_confirm.get_label().autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	get_tree().root.size_changed.connect(_on_screen_resized)
+	resized.connect(_fit_ui)
+	call_deferred("_fit_ui")
 	_apply_theme_colors()
+
+func _fit_ui():
+	var h = get_viewport().get_visible_rect().size.y
+	notch_spacer.custom_minimum_size.y = max(h * 0.07, 30)
+
+	var btn_h = clamp(h * 0.07, 36, 72)
+	var font_sz = max(floor(btn_h * 0.42), 14)
+
+	for btn in [reset_button, back_button]:
+		btn.custom_minimum_size.y = btn_h
+		btn.add_theme_font_size_override("font_size", font_sz)
 
 func _on_sound_changed(value: float):
 	SettingsManager.set_sound_volume(value / 100.0)

@@ -3,10 +3,13 @@ extends Control
 @onready var grid: GridContainer = %AchievementsGrid
 @onready var back_button: Button = %BackButton
 @onready var title_label: Label = %TitleLabel
+@onready var notch_spacer: Control = %NotchSpacer
 
 func _ready():
 	back_button.pressed.connect(_on_back_pressed)
 	ThemeManager.theme_changed.connect(_apply_theme_colors)
+	resized.connect(_fit_ui)
+	call_deferred("_fit_ui")
 	call_deferred("_populate_achievements")
 	_apply_theme_colors()
 
@@ -84,6 +87,15 @@ func _create_achievement_card(ach) -> PanelContainer:
 		vbox.add_child(lock_label)
 
 	return panel
+
+func _fit_ui():
+	var h = get_viewport().get_visible_rect().size.y
+	notch_spacer.custom_minimum_size.y = max(h * 0.07, 30)
+
+	var btn_h = clamp(h * 0.07, 36, 72)
+	var font_sz = max(floor(btn_h * 0.42), 14)
+	back_button.custom_minimum_size.y = btn_h
+	back_button.add_theme_font_size_override("font_size", font_sz)
 
 func _on_back_pressed():
 	get_tree().change_scene_to_file("res://Scenes/main_menu.tscn")
