@@ -27,6 +27,7 @@ func _ready():
 
 func _fit_ui():
 	var h = get_viewport().get_visible_rect().size.y
+	var scale = h / 900.0
 	var safe_top = max(h * 0.07, 30)
 
 	$TopBar.offset_top = safe_top
@@ -37,6 +38,12 @@ func _fit_ui():
 	_btn_font_sz = max(floor(_btn_h * 0.38), 16)
 	exit_button.custom_minimum_size.y = _btn_h
 	exit_button.add_theme_font_size_override("font_size", _btn_font_sz - 4)
+
+	question_label.add_theme_font_size_override("font_size", floor(22 * scale))
+	equation_label.add_theme_font_size_override("font_size", floor(36 * scale))
+	feedback_label.add_theme_font_size_override("font_size", floor(18 * scale))
+	score_label.add_theme_font_size_override("font_size", floor(20 * scale))
+	progress_label.add_theme_font_size_override("font_size", floor(20 * scale))
 
 func _start_new_game():
 	GameManager.start_game()

@@ -40,6 +40,7 @@ func _ready():
 
 func _fit_ui():
 	var h = get_viewport().get_visible_rect().size.y
+	var scale = h / 900.0
 	notch_spacer.custom_minimum_size.y = max(h * 0.07, 30)
 
 	var btn_h = clamp(h * 0.07, 36, 72)
@@ -48,6 +49,11 @@ func _fit_ui():
 	for btn in [reset_button, back_button]:
 		btn.custom_minimum_size.y = btn_h
 		btn.add_theme_font_size_override("font_size", font_sz)
+
+	title_label.add_theme_font_size_override("font_size", floor(36 * scale))
+	for lbl in [sound_label, music_label, questions_label]:
+		lbl.add_theme_font_size_override("font_size", floor(16 * scale))
+	dark_mode_check.add_theme_font_size_override("font_size", floor(16 * scale))
 
 func _on_sound_changed(value: float):
 	SettingsManager.set_sound_volume(value / 100.0)

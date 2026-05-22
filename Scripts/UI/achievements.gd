@@ -5,6 +5,8 @@ extends Control
 @onready var title_label: Label = %TitleLabel
 @onready var notch_spacer: Control = %NotchSpacer
 
+var _font_scale: float = 1.0
+
 func _ready():
 	back_button.pressed.connect(_on_back_pressed)
 	ThemeManager.theme_changed.connect(_apply_theme_colors)
@@ -28,7 +30,7 @@ func _create_achievement_card(ach) -> PanelContainer:
 	var panel = PanelContainer.new()
 	panel.size_flags_horizontal = Control.SIZE_EXPAND | Control.SIZE_FILL
 	panel.size_flags_vertical = Control.SIZE_EXPAND | Control.SIZE_FILL
-	panel.custom_minimum_size = Vector2(200, 90)
+	panel.custom_minimum_size = Vector2(200, 90 * _font_scale)
 
 	var style = StyleBoxFlat.new()
 	style.bg_color = ThemeManager.get_button_color()
@@ -53,7 +55,7 @@ func _create_achievement_card(ach) -> PanelContainer:
 	icon_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	icon_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	icon_label.size_flags_horizontal = Control.SIZE_EXPAND | Control.SIZE_FILL
-	icon_label.add_theme_font_size_override("font_size", 16)
+	icon_label.add_theme_font_size_override("font_size", floor(16 * _font_scale))
 	icon_label.add_theme_color_override("font_color", ThemeManager.get_text_color() if ach.unlocked else Color.GRAY)
 	vbox.add_child(icon_label)
 
@@ -62,7 +64,7 @@ func _create_achievement_card(ach) -> PanelContainer:
 	desc_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	desc_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	desc_label.size_flags_horizontal = Control.SIZE_EXPAND | Control.SIZE_FILL
-	desc_label.add_theme_font_size_override("font_size", 13)
+	desc_label.add_theme_font_size_override("font_size", floor(13 * _font_scale))
 	desc_label.autowrap_mode = TextServer.AUTOWRAP_WORD
 	desc_label.add_theme_color_override("font_color", ThemeManager.get_text_color() if ach.unlocked else Color.GRAY)
 	vbox.add_child(desc_label)
@@ -73,7 +75,7 @@ func _create_achievement_card(ach) -> PanelContainer:
 		unlock_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		unlock_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		unlock_label.size_flags_horizontal = Control.SIZE_EXPAND | Control.SIZE_FILL
-		unlock_label.add_theme_font_size_override("font_size", 13)
+		unlock_label.add_theme_font_size_override("font_size", floor(13 * _font_scale))
 		unlock_label.add_theme_color_override("font_color", Color("#4caf50"))
 		vbox.add_child(unlock_label)
 	else:
@@ -82,7 +84,7 @@ func _create_achievement_card(ach) -> PanelContainer:
 		lock_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		lock_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		lock_label.size_flags_horizontal = Control.SIZE_EXPAND | Control.SIZE_FILL
-		lock_label.add_theme_font_size_override("font_size", 13)
+		lock_label.add_theme_font_size_override("font_size", floor(13 * _font_scale))
 		lock_label.add_theme_color_override("font_color", Color("#757575"))
 		vbox.add_child(lock_label)
 
@@ -90,12 +92,16 @@ func _create_achievement_card(ach) -> PanelContainer:
 
 func _fit_ui():
 	var h = get_viewport().get_visible_rect().size.y
+	_font_scale = h / 900.0
 	notch_spacer.custom_minimum_size.y = max(h * 0.07, 30)
 
 	var btn_h = clamp(h * 0.07, 36, 72)
 	var font_sz = max(floor(btn_h * 0.42), 14)
 	back_button.custom_minimum_size.y = btn_h
 	back_button.add_theme_font_size_override("font_size", font_sz)
+
+	title_label.add_theme_font_size_override("font_size", floor(36 * _font_scale))
+	_populate_achievements()
 
 func _on_back_pressed():
 	get_tree().change_scene_to_file("res://Scenes/main_menu.tscn")

@@ -9,6 +9,8 @@ const Sections = preload("res://Scripts/Quiz/Sections.gd")
 @onready var title_label: Label = %TitleLabel
 @onready var notch_spacer: Control = %NotchSpacer
 
+var _font_scale: float = 1.0
+
 func _ready():
 	back_button.pressed.connect(_on_back_pressed)
 	select_all_button.pressed.connect(_on_select_all)
@@ -33,7 +35,7 @@ func _create_section_card(sec) -> Panel:
 	var panel = Panel.new()
 	panel.size_flags_horizontal = Control.SIZE_EXPAND | Control.SIZE_FILL
 	panel.size_flags_vertical = Control.SIZE_EXPAND | Control.SIZE_FILL
-	panel.custom_minimum_size = Vector2(0, 40)
+	panel.custom_minimum_size = Vector2(0, 40 * _font_scale)
 
 	var enabled = SettingsManager.is_section_enabled(sec.id)
 	var bg = ThemeManager.get_button_color()
@@ -56,7 +58,7 @@ func _create_section_card(sec) -> Panel:
 
 	var icon_label = Label.new()
 	icon_label.text = sec.icon
-	icon_label.add_theme_font_size_override("font_size", 24)
+	icon_label.add_theme_font_size_override("font_size", floor(24 * _font_scale))
 	icon_label.custom_minimum_size = Vector2(40, 0)
 	icon_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	icon_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -65,7 +67,7 @@ func _create_section_card(sec) -> Panel:
 
 	var name_label = Label.new()
 	name_label.text = sec.name
-	name_label.add_theme_font_size_override("font_size", 20)
+	name_label.add_theme_font_size_override("font_size", floor(20 * _font_scale))
 	name_label.add_theme_color_override("font_color", ThemeManager.get_text_color())
 	name_label.size_flags_horizontal = Control.SIZE_EXPAND
 	name_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
@@ -73,7 +75,7 @@ func _create_section_card(sec) -> Panel:
 
 	var toggle_label = Label.new()
 	toggle_label.text = "Вкл" if enabled else "Выкл"
-	toggle_label.add_theme_font_size_override("font_size", 14)
+	toggle_label.add_theme_font_size_override("font_size", floor(14 * _font_scale))
 	toggle_label.add_theme_color_override("font_color", Color("#4caf50") if enabled else Color("#f44336"))
 	toggle_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	toggle_label.custom_minimum_size = Vector2(48, 0)
@@ -94,6 +96,7 @@ func _create_section_card(sec) -> Panel:
 
 func _fit_ui():
 	var h = get_viewport().get_visible_rect().size.y
+	_font_scale = h / 900.0
 	notch_spacer.custom_minimum_size.y = max(h * 0.07, 30)
 
 	var btn_h = clamp(h * 0.07, 36, 72)
@@ -102,6 +105,9 @@ func _fit_ui():
 	for btn in [back_button, select_all_button, deselect_all_button]:
 		btn.custom_minimum_size.y = btn_h
 		btn.add_theme_font_size_override("font_size", font_sz)
+
+	title_label.add_theme_font_size_override("font_size", floor(36 * _font_scale))
+	_populate_sections()
 
 func _on_select_all():
 	SettingsManager.set_all_sections(true)

@@ -106,13 +106,17 @@ func _update_stats():
 
 func _fit_ui():
 	var h = get_viewport().get_visible_rect().size.y
+	var scale = h / 900.0
 	notch_spacer.custom_minimum_size.y = max(h * 0.07, 30)
 
 	var btn_h = clamp(h * 0.07, 36, 72)
 	var font_sz = max(floor(btn_h * 0.42), 14)
-
 	back_button.custom_minimum_size.y = btn_h
 	back_button.add_theme_font_size_override("font_size", font_sz)
+
+	title_label.add_theme_font_size_override("font_size", floor(36 * scale))
+	for lbl in stat_labels + section_stat_labels:
+		lbl.add_theme_font_size_override("font_size", floor(20 * scale))
 
 func _on_back_pressed():
 	get_tree().change_scene_to_file("res://Scenes/main_menu.tscn")
