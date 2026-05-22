@@ -43,6 +43,8 @@ func _on_theme_changed():
 
 func _fit_title_font_size():
 	var font = title_label.get_theme_default_font()
+	if not font:
+		return
 	var available = title_label.size.x - 16
 	if available <= 0:
 		return
