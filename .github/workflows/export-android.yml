@@ -6,34 +6,37 @@ on:
   workflow_dispatch:
 
 env:
-  GODOT_VERSION: 4.6
+  GODOT_VERSION: 4.6.3
 
 jobs:
-  export:
-    runs-on: ubuntu-latest
+  export-android:
+    runs-on: ubuntu-24.04
+    container:
+      image: barichello/godot-ci:${{ env.GODOT_VERSION }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Godot
-        uses: abarichello/godot-ci@v4
-        with:
-          version: ${{ env.GODOT_VERSION }}
+      - name: Setup
+        run: |
+          mkdir -v -p ~/.local/share/godot/export_templates/
+          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
 
       - name: Create debug keystore
         run: |
           keytool -keyalg RSA -genkeypair -alias android \
-            -keypass android -keystore debug.keystorerc \
+            -keypass android -keystore debug.keystore \
             -storepass android -dname "CN=,OU=,O=,L=,S=,C=" \
             -validity 9999
+          cp debug.keystore /root/debug.keystore
 
       - name: Export APK
         run: |
-          mkdir -p build
-          godot4 --headless --export-debug "Android" build/math-quiz.apk
+          mkdir -v -p build/android
+          godot --headless --verbose --export-debug "Android" build/android/math-quiz.apk
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: math-quiz-android
-          path: build/math-quiz.apk
+          path: build/android/math-quiz.apk
