@@ -50,10 +50,16 @@ func _fit_ui():
 		btn.custom_minimum_size.y = btn_h
 		btn.add_theme_font_size_override("font_size", font_sz)
 
+	for sld in [sound_slider, music_slider]:
+		sld.custom_minimum_size.y = clamp(h * 0.04, 30, 50)
+
 	title_label.add_theme_font_size_override("font_size", floor(36 * scale))
 	for lbl in [sound_label, music_label, questions_label]:
 		lbl.add_theme_font_size_override("font_size", floor(16 * scale))
 	dark_mode_check.add_theme_font_size_override("font_size", floor(16 * scale))
+	dark_mode_check.custom_minimum_size.y = clamp(h * 0.05, 36, 60)
+	questions_spinbox.add_theme_font_size_override("font_size", floor(18 * scale))
+	questions_spinbox.custom_minimum_size.y = clamp(h * 0.05, 36, 60)
 
 func _on_sound_changed(value: float):
 	SettingsManager.set_sound_volume(value / 100.0)
