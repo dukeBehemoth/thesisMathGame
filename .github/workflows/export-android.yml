@@ -5,14 +5,11 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
 
-env:
-  GODOT_VERSION: 4.6.3
-
 jobs:
   export-android:
     runs-on: ubuntu-24.04
     container:
-      image: barichello/godot-ci:${{ env.GODOT_VERSION }}
+      image: barichello/godot-ci:4.6.3
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -20,7 +17,7 @@ jobs:
       - name: Setup
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/
-          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+          mv /root/.local/share/godot/export_templates/4.6.3.stable ~/.local/share/godot/export_templates/4.6.3.stable
 
       - name: Create debug keystore
         run: |
