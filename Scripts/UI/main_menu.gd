@@ -61,7 +61,8 @@ func _fit_ui():
 	var btn_count = buttons.size()
 
 	if btn_count > 0 and available_h > 0:
-		var btn_h = available_h / btn_count
+		var btn_h = available_h / btn_count * 0.5
+		btn_h = clamp(btn_h, 36, 100)
 		var font_sz = max(floor(btn_h * 0.42), 14)
 
 		for btn in buttons:
