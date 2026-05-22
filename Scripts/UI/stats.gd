@@ -101,7 +101,7 @@ func _update_stats():
 		var s = StatsManager.get_section_stats(sec.id)
 		var total = s.correct + s.wrong
 		var acc = StatsManager.get_section_accuracy(sec.id)
-		section_stat_labels[idx].text = sec.icon + " " + sec.name + ": " + str(s.correct) + "✓ / " + str(s.wrong) + "✗  (" + str(snapped(acc, 0.1)) + "%)  [" + str(total) + " ответов]"
+		section_stat_labels[idx].text = sec.icon + " " + sec.name + ": " + str(s.correct) + "/" + str(total) + " (" + str(snapped(acc, 0.1)) + "%)"
 		idx += 1
 
 func _fit_ui():
