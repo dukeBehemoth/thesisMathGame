@@ -8,5 +8,6 @@ Thumbs.db
 .DS_Store
 
 # Godot
-.godot/import/
+.godot/
 *.import
+*.uid
