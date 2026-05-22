@@ -58,6 +58,10 @@ func _calculate_points() -> int:
 			return 35
 	return 10
 
+func _ready():
+	if OS.get_name() == "Android":
+		DisplayServer.screen_set_orientation(DisplayServer.SCREEN_PORTRAIT)
+
 func reset():
 	current_score = 0
 	current_question = 0

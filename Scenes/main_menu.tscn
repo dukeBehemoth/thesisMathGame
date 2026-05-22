@@ -1,77 +1,87 @@
-[gd_scene load_steps=2 format=3 uid="uid://mainmenu"]
+[gd_scene format=3 uid="uid://mainmenu"]
 
-[ext_resource type="Script" path="res://Scripts/UI/main_menu.gd" id="1"]
+[ext_resource type="Script" uid="uid://dfasv0y6as7x7" path="res://Scripts/UI/main_menu.gd" id="1"]
 
-[node name="MainMenu" type="Control"]
+[node name="MainMenu" type="Control" unique_id=1250216593]
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource("1")
 
-[node name="BackgroundColor" type="ColorRect" parent="."]
-anchors_preset = 15
+[node name="BackgroundColor" type="ColorRect" parent="." unique_id=1533320936]
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color(0.1, 0.1, 0.18, 1)
 
-[node name="VBox" type="VBoxContainer" parent="."]
-anchors_preset = 15
+[node name="VBox" type="VBoxContainer" parent="." unique_id=1686998247]
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 12
 
-[node name="TitleLabel" type="Label" parent="VBox"]
+[node name="TitleLabel" type="Label" parent="VBox" unique_id=658767872]
 unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 48
+text = "Математическая
+викторина"
 horizontal_alignment = 1
 vertical_alignment = 1
-theme_override_font_sizes/font_size = 48
-text = "Математическая\nвикторина"
-size_flags_horizontal = 3
 autowrap_mode = 1
 
-[node name="Spacer" type="Control" parent="VBox"]
-custom_minimum_size = Vector2i(0, 30)
+[node name="Spacer" type="Control" parent="VBox" unique_id=865037708]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
 
-[node name="StartButton" type="Button" parent="VBox"]
+[node name="StartButton" type="Button" parent="VBox" unique_id=378803257]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 22
 text = "Начать игру"
-size_flags_horizontal = 3
-custom_minimum_size = Vector2i(0, 52)
 
-[node name="SettingsButton" type="Button" parent="VBox"]
+[node name="SettingsButton" type="Button" parent="VBox" unique_id=1686756674]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 22
 text = "Настройки"
-size_flags_horizontal = 3
-custom_minimum_size = Vector2i(0, 52)
 
-[node name="StatsButton" type="Button" parent="VBox"]
+[node name="StatsButton" type="Button" parent="VBox" unique_id=885413040]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 22
 text = "Статистика"
-size_flags_horizontal = 3
-custom_minimum_size = Vector2i(0, 52)
 
-[node name="AchievementsButton" type="Button" parent="VBox"]
+[node name="AchievementsButton" type="Button" parent="VBox" unique_id=25396631]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 22
 text = "Достижения"
-size_flags_horizontal = 3
-custom_minimum_size = Vector2i(0, 52)
 
-[node name="ThemeButton" type="Button" parent="VBox"]
+[node name="ThemeButton" type="Button" parent="VBox" unique_id=1558275857]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 22
 text = "Разделы"
-size_flags_horizontal = 3
-custom_minimum_size = Vector2i(0, 52)
 
-[node name="QuitButton" type="Button" parent="VBox"]
+[node name="QuitButton" type="Button" parent="VBox" unique_id=1608550090]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 22
 text = "Выход"
-size_flags_horizontal = 3
-custom_minimum_size = Vector2i(0, 52)

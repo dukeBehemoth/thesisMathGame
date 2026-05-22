@@ -30,6 +30,7 @@ func _ready():
 	ThemeManager.theme_changed.connect(_apply_theme_colors)
 	reset_button.pressed.connect(_on_reset_pressed)
 	reset_confirm.confirmed.connect(_on_reset_confirmed)
+	reset_confirm.get_label().autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	get_tree().root.size_changed.connect(_on_screen_resized)
 	_apply_theme_colors()
 
